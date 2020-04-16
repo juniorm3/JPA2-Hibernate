@@ -9,15 +9,15 @@ import com.algaworks.curso.jpa2.dao.FabricanteDAO;
 import com.algaworks.curso.jpa2.modelo.Fabricante;
 import com.algaworks.curso.jpa2.util.cdi.CDIServiceLocator;
 
-@FacesConverter(forClass = Fabricante.class)
+@FacesConverter(forClass=Fabricante.class)
 public class FabricanteConverter implements Converter {
 
 	private FabricanteDAO fabricanteDAO;
-
+	
 	public FabricanteConverter() {
 		this.fabricanteDAO = CDIServiceLocator.getBean(FabricanteDAO.class);
 	}
-
+	
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		Fabricante retorno = null;
@@ -37,8 +37,8 @@ public class FabricanteConverter implements Converter {
 			
 			return retorno;
 		}
-
-		return " ";
+		
+		return "";
 	}
 
 }
