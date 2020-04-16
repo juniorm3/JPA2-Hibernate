@@ -19,15 +19,15 @@ import com.algaworks.curso.jpa2.util.jsf.FacesUtil;
 public class PesquisaFabricanteBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Inject
 	FabricanteDAO fabricanteDAO;
-
+	
 	private List<Fabricante> fabricantes = new ArrayList<>();
 	
 	private Fabricante fabricanteSelecionado;
 	
-	public List<Fabricante> getFabricantes(){
+	public List<Fabricante> getFabricantes() {
 		return fabricantes;
 	}
 	
@@ -35,16 +35,15 @@ public class PesquisaFabricanteBean implements Serializable {
 		try {
 			fabricanteDAO.excluir(fabricanteSelecionado);
 			this.fabricantes.remove(fabricanteSelecionado);
-			FacesUtil.addSuccessMessage("Fabricante	" + fabricanteSelecionado.getNome() + " excluído com sucesso!");			
+			FacesUtil.addSuccessMessage("Fabricante " + fabricanteSelecionado.getNome() + " excluído com sucesso.");
 		} catch (NegocioException e) {
 			FacesUtil.addErrorMessage(e.getMessage());
 		}
 	}
-	
+
 	public Fabricante getFabricanteSelecionado() {
 		return fabricanteSelecionado;
 	}
-	
 	public void setFabricanteSelecionado(Fabricante fabricanteSelecionado) {
 		this.fabricanteSelecionado = fabricanteSelecionado;
 	}

@@ -35,16 +35,17 @@ public class CadastroModeloCarroBean implements Serializable {
 		try {
 			this.cadastroModeloCarroService.salvar(modeloCarro);
 			FacesUtil.addSuccessMessage("Modelo carro salvo com sucesso!");
+
+			this.limpar();
 		} catch (NegocioException e) {
 			FacesUtil.addErrorMessage(e.getMessage());
 		}
-		
-		this.limpar();
 	}
 	
 	@PostConstruct
 	public void inicializar() {
 		this.limpar();
+		this.modeloCarro = new ModeloCarro();
 		this.fabricantes = fabricanteDAO.buscarTodos();
 	}
 	
