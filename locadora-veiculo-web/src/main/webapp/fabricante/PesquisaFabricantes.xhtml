@@ -4,7 +4,7 @@
     xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui">
-
+    
     <ui:define name="titulo">Pesquisa de Fabricantes</ui:define>
     
     <ui:define name="corpo">
@@ -36,7 +36,7 @@
 		    			<p:button outcome="CadastroFabricante" icon="ui-icon-pencil" title="Editar">
 		    				<f:param name="fabricante" value="#{fabricante.codigo}"/>
 		    			</p:button>
-		    			<p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show();"
+		    			<p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="confirmacaoExclusao.show()"
 								process="@this" update=":frmPesquisa:confirmacaoExclusaoDialog">
 							<f:setPropertyActionListener target="#{pesquisaFabricanteBean.fabricanteSelecionado}" value="#{fabricante}" />
 						</p:commandButton>

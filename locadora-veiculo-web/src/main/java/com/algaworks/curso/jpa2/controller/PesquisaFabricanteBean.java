@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -47,6 +48,7 @@ public class PesquisaFabricanteBean implements Serializable {
 		this.fabricanteSelecionado = fabricanteSelecionado;
 	}
 	
+	@PostConstruct
 	public void inicializar() {
 		fabricantes = fabricanteDAO.buscarTodos();
 	}

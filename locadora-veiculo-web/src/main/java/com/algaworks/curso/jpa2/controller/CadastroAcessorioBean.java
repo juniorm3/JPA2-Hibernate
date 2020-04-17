@@ -22,20 +22,19 @@ public class CadastroAcessorioBean implements Serializable {
 	@Inject
 	private CadastroAcessorioService cadastroAcessorioService;
 	
-	public void inicializar() {
-		if (this.acessorio == null) {
-			this.limpar();
-		}
+	public CadastroAcessorioBean() {
+		this.limpar();
 	}
 	
 	public void salvar() {
 		try {
 			this.cadastroAcessorioService.salvar(acessorio);
 			FacesUtil.addSuccessMessage("Acessório salvo com sucesso!");
-			this.limpar();
 		} catch (NegocioException e) {
 			FacesUtil.addErrorMessage(e.getMessage());
 		}
+		
+		this.limpar();
 	}
 	
 	public void limpar() {

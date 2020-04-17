@@ -3,6 +3,7 @@ package com.algaworks.curso.jpa2.controller;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -42,6 +43,7 @@ public class NovoAluguelBean implements Serializable {
 		this.limpar();
 	}
 	
+	@PostConstruct
 	public void inicializar() {
 		this.limpar();
 		

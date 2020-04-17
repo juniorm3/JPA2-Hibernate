@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -32,7 +33,7 @@ public class Carro {
 	private ModeloCarro modelo;
 
 	@ManyToMany
-	@JoinTable(name = "carro_acessorio"
+	@JoinTable(name="carro_acessorio"
 		, joinColumns = @JoinColumn(name="codigo_carro")
 		, inverseJoinColumns = @JoinColumn(name="codigo_acessorio"))
 	private List<Acessorio> acessorios;

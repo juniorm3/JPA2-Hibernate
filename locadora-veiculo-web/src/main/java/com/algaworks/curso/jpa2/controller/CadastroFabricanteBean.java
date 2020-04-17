@@ -2,6 +2,7 @@ package com.algaworks.curso.jpa2.controller;
 
 import java.io.Serializable;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -19,12 +20,12 @@ public class CadastroFabricanteBean implements Serializable {
 
 	@Inject
 	private CadastroFabricanteService cadastroFabricanteService;
-
+	
 	private Fabricante fabricante;
-
+	
 	public void salvar() {
 		try {
-			cadastroFabricanteService.salvar(fabricante);
+			this.cadastroFabricanteService.salvar(fabricante);
 			FacesUtil.addSuccessMessage("Fabricante salvo com sucesso!");
 			
 			this.limpar();
@@ -33,22 +34,22 @@ public class CadastroFabricanteBean implements Serializable {
 		}
 	}
 	
+	@PostConstruct
 	public void inicializar() {
-		if (this.fabricante == null) {
-			limpar();
-		}
+		this.limpar();
 	}
-
-	private void limpar() {
+	
+	public void limpar() {
 		this.fabricante = new Fabricante();
 	}
 
 	public Fabricante getFabricante() {
 		return fabricante;
 	}
-
 	public void setFabricante(Fabricante fabricante) {
 		this.fabricante = fabricante;
 	}
-
+	
+	
+	
 }
