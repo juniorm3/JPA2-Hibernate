@@ -2,7 +2,6 @@ package com.algaworks.curso.jpa2.controller;
 
 import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -34,9 +33,10 @@ public class CadastroFabricanteBean implements Serializable {
 		}
 	}
 	
-	@PostConstruct
-	public void init() {
-		this.limpar();
+	public void inicializar() {
+		if (this.fabricante == null) {
+			limpar();
+		}
 	}
 
 	private void limpar() {

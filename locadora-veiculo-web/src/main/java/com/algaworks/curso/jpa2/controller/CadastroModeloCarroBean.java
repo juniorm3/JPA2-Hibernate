@@ -3,7 +3,6 @@ package com.algaworks.curso.jpa2.controller;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -42,9 +41,11 @@ public class CadastroModeloCarroBean implements Serializable {
 		}
 	}
 	
-	@PostConstruct
 	public void inicializar() {
-		this.limpar();
+		if (this.modeloCarro == null) {
+			this.limpar();
+		}
+		
 		this.modeloCarro = new ModeloCarro();
 		this.fabricantes = fabricanteDAO.buscarTodos();
 	}
