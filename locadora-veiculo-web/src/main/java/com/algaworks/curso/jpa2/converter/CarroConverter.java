@@ -9,7 +9,7 @@ import com.algaworks.curso.jpa2.dao.CarroDAO;
 import com.algaworks.curso.jpa2.modelo.Carro;
 import com.algaworks.curso.jpa2.util.cdi.CDIServiceLocator;
 
-@FacesConverter(forClass=Carro.class)
+//@FacesConverter(value = "carrosConverter")
 public class CarroConverter implements Converter {
 
 	private CarroDAO carroDAO;
