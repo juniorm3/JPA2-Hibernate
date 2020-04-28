@@ -2,6 +2,7 @@ package com.algaworks.curso.jpa2.modelo;
 
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,48 +14,42 @@ import javax.persistence.OneToOne;
 @Entity
 public class Aluguel {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
-
 	private BigDecimal valorTotal;
-
-	@ManyToOne
-	@JoinColumn(name = "codigo_carro")
 	private Carro carro;
-
-	@OneToOne //(cascade = CascadeType.ALL)
-	@JoinColumn(name = "codigo_apolice_seguro")
+	
 	private ApoliceSeguro apoliceSeguro;
-
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Long getCodigo() {
 		return codigo;
 	}
-
 	public void setCodigo(Long codigo) {
 		this.codigo = codigo;
 	}
-
+	
 	public BigDecimal getValorTotal() {
 		return valorTotal;
 	}
-
 	public void setValorTotal(BigDecimal valorTotal) {
 		this.valorTotal = valorTotal;
 	}
 
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="codigo_apolice_seguro")
 	public ApoliceSeguro getApoliceSeguro() {
 		return apoliceSeguro;
 	}
-
 	public void setApoliceSeguro(ApoliceSeguro apoliceSeguro) {
 		this.apoliceSeguro = apoliceSeguro;
 	}
-
+	
+	@ManyToOne
+	@JoinColumn(name="codigo_carro")
 	public Carro getCarro() {
 		return carro;
 	}
-
 	public void setCarro(Carro carro) {
 		this.carro = carro;
 	}
@@ -66,7 +61,7 @@ public class Aluguel {
 		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
 		return result;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -83,5 +78,5 @@ public class Aluguel {
 			return false;
 		return true;
 	}
-
+	
 }

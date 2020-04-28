@@ -1,19 +1,13 @@
 <ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
     xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
     xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui"
-    xmlns:o="http://omnifaces.org/ui">
+    xmlns:p="http://primefaces.org/ui">
 
     <ui:define name="titulo">Pesquisa de Carro</ui:define>
     
     <ui:define name="corpo">
-    	<f:metadata>
-    		<o:viewParam name="carro" value="#{cadastroCarroBean.carro}" converter="carrosConverter"/>
-			<f:viewAction action="#{pesquisaCarroBean.inicializar}"/>
-		</f:metadata>
-		
     	<h1>Pesquisa de carros</h1>
     	
     	<h:form id="frmPesquisa">
@@ -41,7 +35,9 @@
 		    			<h:outputText value="#{carro.valorDiaria}" />
 		    		</p:column>
 		    		<p:column headerText="Acessórios" style="width: 100px; text-align: center">
-		    			<p:commandButton icon="ui-icon-extlink" title="Acessórios" >
+		    			<p:commandButton icon="ui-icon-extlink" title="Acessórios" action="#{pesquisaCarroBean.buscarCarroComAcessorios}"
+		    					process="@this" oncomplete="mostraAcessorios.show()" update=":frmPesquisa:mostraAcessoriosDialog">
+		    				<f:setPropertyActionListener target="#{pesquisaCarroBean.carroSelecionado}" value="#{carro}" />
 		    			</p:commandButton>
 		    		</p:column>
 		    		<p:column style="width: 100px; text-align: center">
@@ -62,6 +58,14 @@
 	        	<p:commandButton value="Sim" update=":frmPesquisa:carrosTable"
 	        			onclick="confirmacaoExclusao.hide()" action="#{pesquisaCarroBean.excluir}" />
 	    	</p:confirmDialog>
+	    	
+	    	<p:dialog id="mostraAcessoriosDialog" header="Acessórios" widgetVar="mostraAcessorios" modal="true">
+    			<p:dataList value="#{pesquisaCarroBean.carroSelecionado.acessorios}" var="acessorio" itemType="disc"
+    					rendered="#{not empty pesquisaCarroBean.carroSelecionado.acessorios}">
+    				#{acessorio.descricao}
+    			</p:dataList>
+    			<h:outputText value="Nenhum acessório" rendered="#{empty pesquisaCarroBean.carroSelecionado.acessorios}"/>
+			</p:dialog>
 	    	
 	    </h:form>
     </ui:define>

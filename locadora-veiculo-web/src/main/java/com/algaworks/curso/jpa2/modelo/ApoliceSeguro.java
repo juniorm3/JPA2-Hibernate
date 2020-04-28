@@ -9,61 +9,52 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "apolice_seguro")
+@Table(name="apolice_seguro")
 public class ApoliceSeguro {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
-
 	private BigDecimal valorFranquia;
-
 	private Boolean protecaoTerceiro;
-
 	private Boolean protecaoCausasNaturais;
-
 	private Boolean protecaoRoubo;
-
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Long getCodigo() {
 		return codigo;
 	}
-
 	public void setCodigo(Long codigo) {
 		this.codigo = codigo;
 	}
-
+	
 	public BigDecimal getValorFranquia() {
 		return valorFranquia;
 	}
-
 	public void setValorFranquia(BigDecimal valorFranquia) {
 		this.valorFranquia = valorFranquia;
 	}
-
+	
 	public Boolean getProtecaoTerceiro() {
 		return protecaoTerceiro;
 	}
-
 	public void setProtecaoTerceiro(Boolean protecaoTerceiro) {
 		this.protecaoTerceiro = protecaoTerceiro;
 	}
-
+	
 	public Boolean getProtecaoCausasNaturais() {
 		return protecaoCausasNaturais;
 	}
-
 	public void setProtecaoCausasNaturais(Boolean protecaoCausasNaturais) {
 		this.protecaoCausasNaturais = protecaoCausasNaturais;
 	}
-
+	
 	public Boolean getProtecaoRoubo() {
 		return protecaoRoubo;
 	}
-
 	public void setProtecaoRoubo(Boolean protecaoRoubo) {
 		this.protecaoRoubo = protecaoRoubo;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -88,5 +79,5 @@ public class ApoliceSeguro {
 			return false;
 		return true;
 	}
-
+	
 }

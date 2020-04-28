@@ -1,7 +1,7 @@
 <ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
     xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui"
     xmlns:o="http://omnifaces.org/ui">
@@ -10,8 +10,7 @@
     
     <ui:define name="corpo">
     	<f:metadata>
-			<o:viewParam name="acessorio" value="#{cadastroAcessorioBean.acessorio}" converter="acessorioConverter"/>
-			<f:viewAction action="#{cadastroAcessorioBean.inicializar}"/>
+			<o:viewParam name="acessorio" value="#{cadastroAcessorioBean.acessorio}" />
 		</f:metadata>
     
     	<h1>Novo acessorio</h1>

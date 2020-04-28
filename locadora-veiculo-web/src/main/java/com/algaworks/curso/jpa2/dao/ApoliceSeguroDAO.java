@@ -10,10 +10,10 @@ import com.algaworks.curso.jpa2.modelo.ApoliceSeguro;
 public class ApoliceSeguroDAO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	@Inject
 	private EntityManager manager;
-
+	
 	public void salvar(ApoliceSeguro apoliceSeguro) {
 		manager.persist(apoliceSeguro);
 	}

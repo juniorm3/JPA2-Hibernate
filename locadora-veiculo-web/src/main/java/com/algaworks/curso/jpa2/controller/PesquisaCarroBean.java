@@ -22,15 +22,15 @@ public class PesquisaCarroBean implements Serializable {
 
 	@Inject
 	CarroDAO carroDAO;
-
+	
 	private List<Carro> carros = new ArrayList<>();
-
+	
 	private Carro carroSelecionado;
-
+	
 	public List<Carro> getCarros() {
 		return carros;
 	}
-
+	
 	public void excluir() {
 		try {
 			carroDAO.excluir(carroSelecionado);
@@ -44,7 +44,6 @@ public class PesquisaCarroBean implements Serializable {
 	public Carro getCarroSelecionado() {
 		return carroSelecionado;
 	}
-
 	public void setCarroSelecionado(Carro carroSelecionado) {
 		this.carroSelecionado = carroSelecionado;
 	}
@@ -53,5 +52,9 @@ public class PesquisaCarroBean implements Serializable {
 	public void inicializar() {
 		carros = carroDAO.buscarTodos();
 	}
-
+	
+	public void buscarCarroComAcessorios() {
+		carroSelecionado = carroDAO.buscarCarroComAcessorios(carroSelecionado.getCodigo());
+	}
+	
 }
