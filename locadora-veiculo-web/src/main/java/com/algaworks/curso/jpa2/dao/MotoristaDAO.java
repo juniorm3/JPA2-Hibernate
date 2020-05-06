@@ -11,17 +11,17 @@ import com.algaworks.curso.jpa2.modelo.Motorista;
 import com.algaworks.curso.jpa2.service.NegocioException;
 import com.algaworks.curso.jpa2.util.jpa.Transactional;
 
-public class MotoristaDAO  implements Serializable {
+public class MotoristaDAO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Inject
 	private EntityManager manager;
-	
+
 	public Motorista buscarPeloCodigo(Long codigo) {
 		return manager.find(Motorista.class, codigo);
 	}
-	
+
 	public void salvar(Motorista motorista) {
 		manager.merge(motorista);
 	}
@@ -30,7 +30,7 @@ public class MotoristaDAO  implements Serializable {
 	public List<Motorista> buscarTodos() {
 		return manager.createQuery("from Motorista").getResultList();
 	}
-	
+
 	@Transactional
 	public void excluir(Motorista motorista) throws NegocioException {
 		motorista = buscarPeloCodigo(motorista.getCodigo());
