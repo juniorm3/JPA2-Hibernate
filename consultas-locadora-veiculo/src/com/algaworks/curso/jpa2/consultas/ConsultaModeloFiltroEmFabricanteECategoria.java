@@ -13,11 +13,15 @@ public class ConsultaModeloFiltroEmFabricanteECategoria {
 		EntityManagerFactory emf = JPAUtil.creaEntityManager().getEntityManagerFactory();
 		EntityManager em = emf.createEntityManager();
 		
-		
-		List<String> modelos = em.createQuery("select mc.descricao from ModeloCarro mc"
+		String jpql = "select mc.descricao from ModeloCarro mc"
 				+ " where mc.fabricante.nome = 'Chevrolet'"
-				+ "	and mc.categoria in ('SEDAN_MEDIO', 'SEDAN_GRANDE')"
-				, String.class).getResultList();
+				+ "	and mc.categoria in ('SEDAN_MEDIO', 'SEDAN_GRANDE')";
+		
+		String jpqlLike = "select mc.descricao from ModeloCarro mc"
+				+ " where mc.fabricante.nome = 'Chevrolet'"
+				+ "	and mc.categoria like 'SEDAN%'";
+		
+		List<String> modelos = em.createQuery(jpql, String.class).getResultList();
 		
 		for (String modelo : modelos) {
 			System.out.println(modelo);
