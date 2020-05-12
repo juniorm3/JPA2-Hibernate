@@ -1,14 +1,11 @@
 package com.algaworks.curso.jpa2.consultas;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 import com.algaworks.curso.jpa2.info.AluguelCarroInfo;
-import com.algaworks.curso.jpa2.modelo.Aluguel;
-import com.algaworks.curso.jpa2.modelo.Carro;
 import com.algaworks.curso.jpa2.util.JPAUtil;
 
 public class ConsultasAgregadasEmCarro {
