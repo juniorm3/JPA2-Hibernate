@@ -51,7 +51,7 @@
 				<p:selectManyCheckbox id="acessorios" styleClass="many-checkbox" 
 						value="#{cadastroCarroBean.carro.acessorios}" converter="acessorioConverter">
 						<f:attribute name="collectionType" value="java.util.ArrayList"/>
-					<f:selectItems value="#{cadastroCarroBean.acessorios}" var="acessorio" 
+						<f:selectItems value="#{cadastroCarroBean.acessorios}" var="acessorio" 
 						itemLabel="#{acessorio.descricao}" itemValue="#{acessorio}" />
 				</p:selectManyCheckbox>			    
 			</p:panelGrid>
