@@ -17,7 +17,7 @@ public class ConsultandoPrimeiroProjeto {
 		if(cliente != null) {
 			System.out.println("Nome: " + cliente.getNome());
 			System.out.println("Idade: " + cliente.getIdade());
-			System.out.println("Profissão: " + cliente.getProfissao());
+			System.out.println("Profissão: " + cliente.getProfisao());
 			System.out.println("Sexo: " + cliente.getSexo());
 		} else {
 			System.out.println("Cliente não encontrado!");
