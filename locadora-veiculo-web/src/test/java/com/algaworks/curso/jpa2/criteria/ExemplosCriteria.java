@@ -1,5 +1,6 @@
 package com.algaworks.curso.jpa2.criteria;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -15,6 +16,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.algaworks.curso.jpa2.modelo.Aluguel;
 import com.algaworks.curso.jpa2.modelo.Carro;
 
 public class ExemplosCriteria {
@@ -45,13 +47,52 @@ public class ExemplosCriteria {
 
 		Root<Carro> carro = criteriaQuery.from(Carro.class);
 		criteriaQuery.select(carro.<String>get("placa"));
-		
+
 		TypedQuery<String> query = manager.createQuery(criteriaQuery);
 		List<String> placas = query.getResultList();
-		
+
 		for (String placa : placas) {
 			System.out.println(placa);
 		}
 
 	}
+
+	@Test
+	public void funcoesDeAgregacao() {
+		CriteriaBuilder builder = manager.getCriteriaBuilder();
+		CriteriaQuery<BigDecimal> criteriaQuery = builder.createQuery(BigDecimal.class);
+
+		Root<Aluguel> aluguel = criteriaQuery.from(Aluguel.class);
+		criteriaQuery.select(builder.sum(aluguel.<BigDecimal>get("valorTotal")));
+		
+		TypedQuery<BigDecimal> query = manager.createQuery(criteriaQuery);
+		BigDecimal total = query.getSingleResult();
+		
+		System.out.println("Soma de todos os alugueis: " + total);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
