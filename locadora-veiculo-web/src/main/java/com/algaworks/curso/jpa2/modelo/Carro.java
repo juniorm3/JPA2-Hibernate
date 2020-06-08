@@ -23,7 +23,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name = "Carro.buscarTodos", query = "select c from Carro c"),
+	@NamedQuery(name = "Carro.buscarTodos", query = "select c from Carro c inner join fetch c.modelo"),
 	@NamedQuery(name = "Carro.buscarCarroComAcessorios", query = "select c "
 															+ "from Carro c JOIN c.acessorios a "
 															+ "where c.codigo = :codigo")
@@ -79,7 +79,7 @@ public class Carro {
 		this.valorDiaria = valorDiaria;
 	}
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="codigo_modelo")
 	public ModeloCarro getModelo() {
 		return modelo;
