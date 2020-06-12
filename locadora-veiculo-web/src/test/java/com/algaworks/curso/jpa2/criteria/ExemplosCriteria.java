@@ -23,7 +23,9 @@ import org.junit.Test;
 
 import com.algaworks.curso.jpa2.modelo.Aluguel;
 import com.algaworks.curso.jpa2.modelo.Carro;
+import com.algaworks.curso.jpa2.modelo.Carro_;
 import com.algaworks.curso.jpa2.modelo.ModeloCarro;
+import com.algaworks.curso.jpa2.modelo.ModeloCarro_;
 
 public class ExemplosCriteria {
 
@@ -70,115 +72,168 @@ public class ExemplosCriteria {
 
 		Root<Aluguel> aluguel = criteriaQuery.from(Aluguel.class);
 		criteriaQuery.select(builder.sum(aluguel.<BigDecimal>get("valorTotal")));
-		
+
 		TypedQuery<BigDecimal> query = manager.createQuery(criteriaQuery);
 		BigDecimal total = query.getSingleResult();
-		
+
 		System.out.println("Soma de todos os alugueis: " + total);
 	}
-	
+
 	@Test
 	public void resultadoComplexo() {
-		CriteriaBuilder builder  = manager.getCriteriaBuilder();
+		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<Object[]> criteriaQuery = builder.createQuery(Object[].class);
-		
+
 		Root<Carro> carro = criteriaQuery.from(Carro.class);
 		criteriaQuery.multiselect(carro.get("placa"), carro.get("valorDiaria"));
-		
+
 		TypedQuery<Object[]> query = manager.createQuery(criteriaQuery);
 		List<Object[]> resultado = query.getResultList();
-		
+
 		for (Object[] valores : resultado) {
 			System.out.println(valores[0] + " - " + valores[1]);
 		}
 	}
-		
+
 	@Test
 	public void resultadoTupla() {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<Tuple> criteriaQuery = builder.createTupleQuery();
-		
+
 		Root<Carro> carro = criteriaQuery.from(Carro.class);
-		criteriaQuery.multiselect(carro.get("placa").alias("placaCarro"),
-				carro.get("valorDiaria").alias("valorCarro"));
-		
+		criteriaQuery.multiselect(carro.get("placa").alias("placaCarro"), carro.get("valorDiaria").alias("valorCarro"));
+
 		TypedQuery<Tuple> query = manager.createQuery(criteriaQuery);
 		List<Tuple> resultado = query.getResultList();
-		
+
 		for (Tuple tupla : resultado) {
 			System.out.println(tupla.get("placaCarro") + " - " + tupla.get("valorCarro"));
-			
+
 		}
 	}
-	
+
 	@Test
 	public void resultadoConstrutores() {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<PrecoCarro> criteriaQuery = builder.createQuery(PrecoCarro.class);
-		
-		Root<Carro> carro  = criteriaQuery.from(Carro.class);
-		criteriaQuery.select(builder.construct(PrecoCarro.class, 
-					carro.get("placa"), carro.get("valorDiaria")));
-		
+
+		Root<Carro> carro = criteriaQuery.from(Carro.class);
+		criteriaQuery.select(builder.construct(PrecoCarro.class, carro.get("placa"), carro.get("valorDiaria")));
+
 		TypedQuery<PrecoCarro> query = manager.createQuery(criteriaQuery);
 		List<PrecoCarro> resultado = query.getResultList();
-		
+
 		for (PrecoCarro precoCarro : resultado) {
-			System.out.println(precoCarro.getPlaca() + " - "+ precoCarro.getValor());
+			System.out.println(precoCarro.getPlaca() + " - " + precoCarro.getValor());
 		}
 	}
-	
+
 	@Test
 	public void exemploFuncao() {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<Carro> criteriaQuery = builder.createQuery(Carro.class);
-		
+
 		Root<Carro> carro = criteriaQuery.from(Carro.class);
-		Predicate predicate = builder.equal(builder.upper(carro.<String>get("cor"))
-					, "prata".toUpperCase());
-		
+		Predicate predicate = builder.equal(builder.upper(carro.<String>get("cor")), "prata".toUpperCase());
+
 		criteriaQuery.select(carro);
 		criteriaQuery.where(predicate);
-		
+
 		TypedQuery<Carro> query = manager.createQuery(criteriaQuery);
 		List<Carro> carros = query.getResultList();
-		
+
 		for (Carro c : carros) {
 			System.out.println(c.getPlaca() + " - " + c.getCor());
-			
+
 		}
 	}
-	
+
 	@Test
 	public void exemploOrdenacao() {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<Carro> criteriaQuery = builder.createQuery(Carro.class);
-		
+
 		Root<Carro> carro = criteriaQuery.from(Carro.class);
 		Order order = builder.desc(carro.get("valorDiaria"));
-		
+
 		criteriaQuery.select(carro);
 		criteriaQuery.orderBy(order);
-		
-		
+
 		TypedQuery<Carro> query = manager.createQuery(criteriaQuery);
 		List<Carro> carros = query.getResultList();
-		
+
 		for (Carro c : carros) {
-			System.out.println(c.getPlaca() + " - " + c.getValorDiaria());			
+			System.out.println(c.getPlaca() + " - " + c.getValorDiaria());
 		}
 	}
-	
+
 	@Test
 	public void exemploJoinEFetch() {
 		CriteriaBuilder builder = manager.getCriteriaBuilder();
 		CriteriaQuery<Carro> criteriaQuery = builder.createQuery(Carro.class);
-		
+
 		Root<Carro> carro = criteriaQuery.from(Carro.class);
 		Join<Carro, ModeloCarro> modelo = (Join) carro.fetch("modelo");
-		
+
 		criteriaQuery.select(carro);
 		criteriaQuery.where(builder.equal(modelo.get("descricao"), "Fit"));
+
+		TypedQuery<Carro> query = manager.createQuery(criteriaQuery);
+		List<Carro> carros = query.getResultList();
+
+		for (Carro c : carros) {
+			System.out.println(c.getPlaca() + " - " + c.getModelo().getDescricao());
+		}
+
+	}
+
+	@Test
+	public void mediaDasDiariasDosCarros() {
+		CriteriaBuilder builder = manager.getCriteriaBuilder();
+		CriteriaQuery<Double> criteriaQuery = builder.createQuery(Double.class);
+
+		Root<Carro> carro = criteriaQuery.from(Carro.class);
+		criteriaQuery.select(builder.avg(carro.<Double>get("valorDiaria")));
+
+		TypedQuery<Double> query = manager.createQuery(criteriaQuery);
+		List<Double> total = query.getResultList();
+
+		System.out.println("Média da diária: " + total);
+	}
+
+	@Test
+	public void carrosComValoresAcimaDaMedia() {
+		CriteriaBuilder builder = manager.getCriteriaBuilder();
+		CriteriaQuery<Carro> criteriaQuery = builder.createQuery(Carro.class);
+		Subquery<Double> subquery = criteriaQuery.subquery(Double.class);
+
+		Root<Carro> carro = criteriaQuery.from(Carro.class);
+		Root<Carro> carroSub = subquery.from(Carro.class);
+
+		subquery.select(builder.avg(carroSub.<Double>get("valorDiaria")));
+
+		criteriaQuery.select(carro);
+		criteriaQuery.where(builder.greaterThanOrEqualTo(carro.<Double>get("valorDiaria"), subquery));
+
+		TypedQuery<Carro> query = manager.createQuery(criteriaQuery);
+		List<Carro> carros = query.getResultList();
+
+		for (Carro c : carros) {
+			System.out.println(c.getPlaca() + " - " + c.getValorDiaria());
+		}
+
+	}
+	
+	@Test
+	public void exemploMetamodel() {
+		CriteriaBuilder builder = manager.getCriteriaBuilder();
+		CriteriaQuery<Carro> criteriaQuery = builder.createQuery(Carro.class);
+		
+		Root<Carro> carro = criteriaQuery.from(Carro.class);
+		Join<Carro, ModeloCarro> modelo = (Join) carro.fetch(Carro_.modelo);
+		
+		criteriaQuery.select(carro);
+		criteriaQuery.where(builder.equal(modelo.get(ModeloCarro_.descricao), "Fit"));
 		
 		TypedQuery<Carro> query = manager.createQuery(criteriaQuery);
 		List<Carro> carros = query.getResultList();
@@ -186,45 +241,6 @@ public class ExemplosCriteria {
 		for (Carro c : carros) {
 			System.out.println(c.getPlaca() + " - " + c.getModelo().getDescricao());
 		}
-		
-	}
-	
-	@Test
-	public void mediaDasDiariasDosCarros() {
-		CriteriaBuilder builder = manager.getCriteriaBuilder();
-		CriteriaQuery<Double> criteriaQuery = builder.createQuery(Double.class);
-		
-		Root<Carro> carro = criteriaQuery.from(Carro.class);
-		criteriaQuery.select(builder.avg(carro.<Double>get("valorDiaria")));
-		
-		TypedQuery<Double> query = manager.createQuery(criteriaQuery);
-		List<Double> total = query.getResultList();
-		
-		System.out.println("Média da diária: " + total);
-	}
-	
-	@Test
-	public void carrosComValoresAcimaDaMedia() {
-		CriteriaBuilder builder = manager.getCriteriaBuilder();
-		CriteriaQuery<Carro> criteriaQuery = builder.createQuery(Carro.class);
-		Subquery<Double> subquery = criteriaQuery.subquery(Double.class);
-		
-		Root<Carro> carro = criteriaQuery.from(Carro.class);
-		Root<Carro> carroSub = subquery.from(Carro.class);
-		
-		subquery.select(builder.avg(carroSub.<Double>get("valorDiaria")));
-		
-		criteriaQuery.select(carro);
-		criteriaQuery.where(builder.greaterThanOrEqualTo(carro.<Double>get("valorDiaria"), subquery));
-		
-		TypedQuery<Carro> query = manager.createQuery(criteriaQuery);
-		List<Carro> carros = query.getResultList();
-		
-		for (Carro c : carros) {
-			System.out.println(c.getPlaca() + " - " + c.getValorDiaria());
-			
-		}
-		
 	}
 	
 	
@@ -244,4 +260,15 @@ public class ExemplosCriteria {
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 }
