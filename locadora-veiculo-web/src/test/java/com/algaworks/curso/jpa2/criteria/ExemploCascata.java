@@ -1,7 +1,9 @@
 package com.algaworks.curso.jpa2.criteria;
 
+import javax.persistence.CascadeType;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.OneToMany;
 import javax.persistence.Persistence;
 
 import org.junit.After;
@@ -33,20 +35,42 @@ public class ExemploCascata {
 	public void tearDown() {
 		this.manager.close();
 	}
-	
+
 	@Test
 	public void exemploEntidadeTransiente() {
 		Carro carro = new Carro();
 		carro.setCor("Preto");
 		carro.setPlaca("AAA-1111");
-		
+
 		ModeloCarro modelo = new ModeloCarro();
 		modelo.setCategoria(Categoria.ESPORTIVO);
 		modelo.setDescricao("Ferrari");
 		carro.setModelo(modelo);
-		
+
 		this.manager.getTransaction().begin();
 		this.manager.persist(carro);
+		this.manager.getTransaction().commit();
+	}
+
+	@Test
+	public void exclusaoEmCascata() {
+		Carro carro = this.manager.find(Carro.class, 2L);
+
+		// @OneToMany(mappedBy="carro", cascade = CascadeType.REMOVE) no atributo aluguel
+		
+		this.manager.getTransaction().begin();
+		this.manager.remove(carro);
+		this.manager.getTransaction().commit();
+	}
+
+	@Test
+	public void exclusaoDeObjetosOrfaos() {
+		Carro carro = this.manager.find(Carro.class, 2L);
+		// @OneToMany(mappedBy="carro", cascade = CascadeType.PERSIST, orphanRemoval = true)
+		this.manager.getTransaction().begin();
+		
+		carro.getAlugueis().remove(3);
+		
 		this.manager.getTransaction().commit();
 	}
 
