@@ -89,7 +89,7 @@ public class Carro {
 		this.modelo = modelo;
 	}
 	
-	@ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name="carro_acessorio"
 				, joinColumns=@JoinColumn(name="codigo_carro")
 				, inverseJoinColumns=@JoinColumn(name="codigo_acessorio"))
