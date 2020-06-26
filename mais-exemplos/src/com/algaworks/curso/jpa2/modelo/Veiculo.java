@@ -1,7 +1,9 @@
 package com.algaworks.curso.jpa2.modelo;
 
+import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 
 @Entity(name = "tab_veiculo")
 public class Veiculo {
@@ -9,6 +11,8 @@ public class Veiculo {
 	private VeiculoId codigo;
 	private String fabricante;
 	private String modelo;
+
+	private Proprietario proprietario;
 
 	@EmbeddedId
 	public VeiculoId getCodigo() {
@@ -33,6 +37,21 @@ public class Veiculo {
 
 	public void setModelo(String modelo) {
 		this.modelo = modelo;
+	}
+
+	@Embedded
+	public Proprietario getProprietario() {
+		return proprietario;
+	}
+
+	public void setProprietario(Proprietario proprietario) {
+		this.proprietario = proprietario;
+	}
+	
+	@Transient
+	public String getDescricao() {
+		return "Placa: " + getCodigo().getPlaca() + ". Fabricante: " +
+				getFabricante() + ". Modelo: " + getModelo();
 	}
 
 	@Override
