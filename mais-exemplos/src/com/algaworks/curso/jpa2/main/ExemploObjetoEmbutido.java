@@ -3,7 +3,7 @@ package com.algaworks.curso.jpa2.main;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
-import com.algaworks.curso.jpa2.modelo.Proprietario;
+import com.algaworks.curso.jpa2.modelo.ProprietarioModeloComposto;
 import com.algaworks.curso.jpa2.modelo.Veiculo;
 import com.algaworks.curso.jpa2.modelo.VeiculoId;
 import com.algaworks.curso.jpa2.util.JPAUtil;
@@ -19,7 +19,7 @@ public class ExemploObjetoEmbutido {
 		veiculo.setFabricante("Volks");
 		veiculo.setModelo("Gol");
 
-		Proprietario proprietario = new Proprietario();
+		ProprietarioModeloComposto proprietario = new ProprietarioModeloComposto();
 		proprietario.setNome("João da Silva");
 		proprietario.setTelefone("111111");
 		proprietario.setEmail("joao@silva.com");

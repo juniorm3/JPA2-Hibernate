@@ -12,7 +12,7 @@ public class Veiculo {
 	private String fabricante;
 	private String modelo;
 
-	private Proprietario proprietario;
+	private ProprietarioModeloComposto proprietario;
 
 	@EmbeddedId
 	public VeiculoId getCodigo() {
@@ -40,11 +40,11 @@ public class Veiculo {
 	}
 
 	@Embedded
-	public Proprietario getProprietario() {
+	public ProprietarioModeloComposto getProprietario() {
 		return proprietario;
 	}
 
-	public void setProprietario(Proprietario proprietario) {
+	public void setProprietario(ProprietarioModeloComposto proprietario) {
 		this.proprietario = proprietario;
 	}
 	
