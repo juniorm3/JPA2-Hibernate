@@ -23,10 +23,7 @@ import org.junit.Test;
 
 import com.algaworks.curso.jpa2.modelo.Aluguel;
 import com.algaworks.curso.jpa2.modelo.Carro;
-import com.algaworks.curso.jpa2.modelo.Carro_;
 import com.algaworks.curso.jpa2.modelo.ModeloCarro;
-import com.algaworks.curso.jpa2.modelo.ModeloCarro_;
-import com.algaworks.curso.jpa2.modelo.Motorista;
 
 public class ExemplosCriteria {
 
@@ -225,24 +222,24 @@ public class ExemplosCriteria {
 
 	}
 
-	@Test
-	public void exemploMetamodel() {
-		CriteriaBuilder builder = manager.getCriteriaBuilder();
-		CriteriaQuery<Carro> criteriaQuery = builder.createQuery(Carro.class);
-
-		Root<Carro> carro = criteriaQuery.from(Carro.class);
-		Join<Carro, ModeloCarro> modelo = (Join) carro.fetch(Carro_.modelo);
-
-		criteriaQuery.select(carro);
-		criteriaQuery.where(builder.equal(modelo.get(ModeloCarro_.descricao), "Fit"));
-
-		TypedQuery<Carro> query = manager.createQuery(criteriaQuery);
-		List<Carro> carros = query.getResultList();
-
-		for (Carro c : carros) {
-			System.out.println(c.getPlaca() + " - " + c.getModelo().getDescricao());
-		}
-	}
+//	@Test
+//	public void exemploMetamodel() {
+//		CriteriaBuilder builder = manager.getCriteriaBuilder();
+//		CriteriaQuery<Carro> criteriaQuery = builder.createQuery(Carro.class);
+//
+//		Root<Carro> carro = criteriaQuery.from(Carro.class);
+//		Join<Carro, ModeloCarro> modelo = (Join) carro.fetch(Carro_.modelo);
+//
+//		criteriaQuery.select(carro);
+//		criteriaQuery.where(builder.equal(modelo.get(ModeloCarro_.descricao), "Fit"));
+//
+//		TypedQuery<Carro> query = manager.createQuery(criteriaQuery);
+//		List<Carro> carros = query.getResultList();
+//
+//		for (Carro c : carros) {
+//			System.out.println(c.getPlaca() + " - " + c.getModelo().getDescricao());
+//		}
+//	}
 
 	@Test
 	public void motoristasQueMaisAlugaramCarros() {
