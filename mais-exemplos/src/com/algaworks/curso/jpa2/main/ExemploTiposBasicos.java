@@ -16,8 +16,8 @@ public class ExemploTiposBasicos {
 		
 		Proprietario proprietario = new Proprietario();
 		proprietario.setNome("João");
-		proprietario.getTelefones().add("(34) 1234-5678");
-		proprietario.getTelefones().add("(11) 9876-1432");
+//		proprietario.getTelefones().add("(34) 1234-5678");
+//		proprietario.getTelefones().add("(11) 9876-1432");
 		
 		em.persist(proprietario);
 		
