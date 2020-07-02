@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -42,6 +43,7 @@ public class Carro {
 	
 	private Date dataCriacao;
 	private Date dataModificacao;
+	private byte[] foto;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -123,6 +125,14 @@ public class Carro {
 	}
 	public void setDataModificacao(Date dataModificacao) {
 		this.dataModificacao = dataModificacao;
+	}
+	
+	@Lob
+	public byte[] getFoto() {
+		return foto;
+	}
+	public void setFoto(byte[] foto) {
+		this.foto = foto;
 	}
 	
 	@PrePersist
